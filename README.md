@@ -98,7 +98,7 @@ Serving stack is **FastAPI + React/Vite**, containerised, running CPU inference 
   <img src="https://img.shields.io/badge/LLM-11--20%25%20of%20wall%20time-b08800?style=flat-square" />
 </p>
 
-Clinical question-answering over **OpenTargets** data in **Neo4j**. Retrieval is genuinely hybrid: dense vector search (`all-MiniLM-L6-v2`, 384-dim) for disease matching, deterministic **Cypher traversal** for evidence, a lexical fallback, and LLM intent routing between disease and target queries. Drafting runs on **Llama-3 via Groq**, async.
+Clinical question-answering over **OpenTargets** data in **Neo4j**. Retrieval is genuinely hybrid: dense vector search (`all-MiniLM-L6-v2`, 384-dim) for disease matching, deterministic **Cypher traversal** for evidence, a lexical fallback, and LLM intent routing between disease and target queries. Drafting runs on **Groq** (`openai/gpt-oss-120b`), async.
 
 <details>
 <summary><b>The two things I'd point at in this repo</b></summary>
@@ -117,7 +117,7 @@ Instrumenting the query path also showed the LLM is only **11-20% of wall-clock 
   <img src="https://img.shields.io/badge/Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=white" />
   <img src="https://img.shields.io/badge/Cypher-018BFF?style=flat-square" />
   <img src="https://img.shields.io/badge/Groq-F55036?style=flat-square" />
-  <img src="https://img.shields.io/badge/Llama%203-0866FF?style=flat-square&logo=meta&logoColor=white" />
+  <img src="https://img.shields.io/badge/gpt--oss%20120b-412991?style=flat-square&logo=openai&logoColor=white" />
   <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" />
   <img src="https://img.shields.io/badge/asyncio-3776AB?style=flat-square&logo=python&logoColor=white" />
 </p>

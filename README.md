@@ -201,6 +201,15 @@ Measured at **3-4s end-to-end** in its current serial form. The streaming rework
 - Moving the voice pipeline from serial to streaming
 - A client RAG system at GenLab (ANIKA Jewellery)
 
+---
+
+<!-- Rendered daily by .github/workflows/snake.yml into the output branch. -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vishnu1234555/vishnu1234555/output/github-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/vishnu1234555/vishnu1234555/output/github-snake.svg" />
+  <img src="https://raw.githubusercontent.com/vishnu1234555/vishnu1234555/output/github-snake.svg" width="100%" alt="Contribution snake animation" />
+</picture>
+
 <p align="center">
   <sub>Open to Generative AI / LLM Engineer roles — India and remote.</sub>
 </p>

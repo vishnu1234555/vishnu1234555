@@ -1,28 +1,21 @@
-<h1 align="center">Vishnu Karthik</h1>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Vishnu%20Karthik&fontSize=54&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=Generative%20AI%20%C2%B7%20LLM%20Engineer&descAlignY=57&descSize=18" width="100%" />
 
 <p align="center">
-  <b>Generative AI / LLM Engineer</b><br>
-  Retrieval systems · NER fine-tuning · Agentic tooling · Real-time speech<br>
-  Tamil Nadu, India
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=21&pause=1200&color=38BDAE&center=true&vCenter=true&width=640&lines=Retrieval+systems+that+cite+their+sources;NER+fine-tuning+%2B+structural+validation;Real-time+speech+for+code-mixed+Tamil;I+measure+what+I+ship" alt="Typing SVG" />
 </p>
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/vishnu-karthik-253a972b4/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn">
-  </a>
-  <a href="https://huggingface.co/VK1402">
-    <img src="https://img.shields.io/badge/Hugging%20Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Hugging Face">
-  </a>
-  <a href="mailto:YOUR_EMAIL_HERE">
-    <img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white" alt="Email">
-  </a>
+  <a href="https://www.linkedin.com/in/vishnu-karthik-253a972b4/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://huggingface.co/VK1402"><img src="https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face" /></a>
+  <a href="mailto:YOUR_EMAIL_HERE"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+  <img src="https://img.shields.io/badge/Tamil%20Nadu,%20India-1F2937?style=for-the-badge&logo=googlemaps&logoColor=white" alt="Location" />
 </p>
 
 ---
 
-I build LLM systems where the interesting problem is **what happens after the model answers** — grounding, validation, ranking and measurement.
+I build LLM systems where the interesting problem is **what happens after the model answers** — grounding, validation, ranking, and measurement.
 
-Currently a Generative AI Engineer at **GenLab**, shipping client-facing RAG and voice systems. Before that, ~2 years as a Research Analyst at CapeStart working on structured biomedical and corporate datasets — which is where the graph and document-extraction work comes from.
+Generative AI Engineer at **GenLab**, shipping client-facing RAG and voice systems. Before that, ~2 years as a Research Analyst at **CapeStart** on structured biomedical and corporate datasets — which is where the graph and document-extraction work comes from.
 
 Every number below is one I measured myself, with the scope it was measured on stated next to it.
 
@@ -30,81 +23,186 @@ Every number below is one I measured myself, with the scope it was measured on s
 
 ## Featured work
 
+<!-- TODO(gif): record a screen capture of the extractor pulling entities from a
+     paragraph, save it as assets/pii-demo.gif, then delete these comment markers.
+     Keep it under ~10MB or GitHub will be slow to load the profile. -->
+<!--
+<div align="center">
+  <img src="assets/pii-demo.gif" width="90%" alt="PII extractor pulling entities from a paragraph" />
+</div>
+-->
+
 ### 🔐 Indian Financial PII Extractor
-**Fine-tuned NER + structural validation layer for Indian financial identifiers**
 
-Fine-tuned **GLiNER2** (DeBERTa-v3-base encoder, ~211M params) on **52.5K synthetic Indian financial-PII examples** across **21 entity types** — Aadhaar, PAN, IFSC, UPI ID, bank account, driving licence, passport, voter ID, card details, and named entities like beneficiary and branch.
+**Fine-tuned NER + a structural validation layer for Indian financial identifiers**
 
-The model recovers nearly every entity but over-assigns labels — the same span comes back typed several ways. So the pipeline layers a **per-label structural validator with priority arbitration** over model output: each candidate is checked against the format its label requires, and colliding spans are resolved by label priority rather than model confidence.
+<p>
+  <img src="https://img.shields.io/badge/Precision-0.60%20%E2%86%92%200.87-2ea043?style=flat-square" />
+  <img src="https://img.shields.io/badge/F1-0.73%20%E2%86%92%200.81-2ea043?style=flat-square" />
+  <img src="https://img.shields.io/badge/Recall-0.91%20%E2%86%92%200.76-b08800?style=flat-square" />
+  <img src="https://img.shields.io/badge/CPU%20latency-~1.04s%20warm-30363d?style=flat-square" />
+</p>
+
+Fine-tuned **GLiNER2** (DeBERTa-v3-base encoder, ~211M params) on **52.5K synthetic Indian financial-PII examples** across **21 entity types** — Aadhaar, PAN, IFSC, UPI ID, bank account, driving licence, passport, voter ID, card details, plus named entities like beneficiary and branch.
+
+<details>
+<summary><b>How it works, and what the numbers actually measure</b></summary>
+
+<br>
+
+The model recovers nearly every entity but over-assigns labels — the same span comes back typed several ways at once. So the pipeline layers a **per-label structural validator with priority arbitration** over model output: each candidate is checked against the format its label requires, and colliding spans are resolved by label priority rather than by model confidence.
 
 | | Precision | Recall | F1 |
 |---|---|---|---|
 | Raw model @ threshold 0.99 | 0.60 | 0.91 | 0.73 |
 | **+ validator & arbitration** | **0.87** | 0.76 | **0.81** |
 
-*Measured on a 210-record held-out synthetic set generated by the same script as the training data. Recall cost is the deliberate trade: the generator injects OCR-style character corruption (`0→O`, `1→I`) into ~30% of values, and corrupted-but-correct spans fail the regex.*
+Measured on a 210-record held-out synthetic set generated by the same script as the training data.
 
-Serving stack is **FastAPI + React/Vite**, containerised, running **CPU inference at ~1.04s warm** per request. Weights published to the Hub as `VK1402/AADHAAR_Extractor`.
+The recall cost is a deliberate trade. The generator injects OCR-style character corruption (`0` to `O`, `1` to `I`) into roughly 30% of values, so a corrupted-but-correct span fails the regex and gets dropped. Normalising that corruption before validation is the obvious next win.
 
-→ [`Aadhaar-Final`](https://github.com/vishnu1234555/Aadhaar-Final)
+Serving stack is **FastAPI + React/Vite**, containerised, running CPU inference at ~1.04s warm per request. Weights published to the Hub as `VK1402/AADHAAR_Extractor`.
+
+</details>
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" />
+  <img src="https://img.shields.io/badge/Transformers-FFD21E?style=flat-square&logo=huggingface&logoColor=black" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
+</p>
+
+&rarr; [`Aadhaar-Final`](https://github.com/vishnu1234555/Aadhaar-Final)
 
 ---
 
+<!-- TODO(gif): record the Streamlit app answering a disease query — ideally showing
+     the graph-grounded section and the model-knowledge section side by side, since
+     that is the point the text below is making. Save as assets/graphrag-demo.gif
+     and delete these comment markers. -->
+<!--
+<div align="center">
+  <img src="assets/graphrag-demo.gif" width="90%" alt="GraphRAG returning graph-grounded targets for a disease query" />
+</div>
+-->
+
 ### 🧬 Enterprise Medical GraphRAG
+
 **Hybrid graph + vector retrieval over a 3.8M-node biomedical knowledge graph**
 
-A clinical question-answering system over **OpenTargets** data in **Neo4j** — 3.8M nodes and 7.5M relationships across diseases, targets and evidence. Retrieval is genuinely hybrid: dense vector search (`all-MiniLM-L6-v2`, 384-dim) for disease matching, deterministic **Cypher traversal** for evidence, a lexical fallback, and LLM-based intent routing between disease and target queries. Drafting runs on **Llama-3 via Groq**, async.
+<p>
+  <img src="https://img.shields.io/badge/Graph-3.8M%20nodes%20%2F%207.5M%20edges-30363d?style=flat-square" />
+  <img src="https://img.shields.io/badge/Retrieval-2%20%E2%86%92%204%20distinct%20targets-2ea043?style=flat-square" />
+  <img src="https://img.shields.io/badge/LLM-11--20%25%20of%20wall%20time-b08800?style=flat-square" />
+</p>
 
-Two things I'd point at in this repo:
+Clinical question-answering over **OpenTargets** data in **Neo4j**. Retrieval is genuinely hybrid: dense vector search (`all-MiniLM-L6-v2`, 384-dim) for disease matching, deterministic **Cypher traversal** for evidence, a lexical fallback, and LLM intent routing between disease and target queries. Drafting runs on **Llama-3 via Groq**, async.
 
-**Provenance separation.** Answers are split at generation into a graph-grounded section and a model-knowledge section, each explicitly labelled at the point of output. When traversal returns nothing, the grounded section says so rather than filling the gap from model weights.
+<details>
+<summary><b>The two things I'd point at in this repo</b></summary>
 
-**A ranking bug I traced to the data layer.** Top-5 retrieval was returning obscure targets for well-studied diseases. Cause: evidence scores aren't comparable across OpenTargets datasources — ChEMBL evidence scores a flat 1.0 while genetic sources score fractionally, so `ORDER BY score DESC` handed every slot to one source. Switching the ranking key to **evidence volume per target** — source-agnostic — plus deduplicating inside Cypher took a lung-cancer query from 2 distinct targets to 4, with EGFR among them.
+<br>
 
-Instrumentation on the query path also showed the LLM is **11–20% of wall-clock time**; the rest is retrieval and blocking outbound API calls. That's where the optimisation work actually is.
+**Provenance separation.** Answers are split at generation into a graph-grounded section and a model-knowledge section, each labelled explicitly at the point of output. When traversal returns nothing, the grounded section says so rather than filling the gap from model weights.
 
-→ [`Enterprise-Medical-GraphRAG`](https://github.com/vishnu1234555/Enterprise-Medical-GraphRAG)
+**A ranking bug I traced to the data layer.** Top-5 retrieval was returning obscure targets for well-studied diseases. Cause: evidence scores are not comparable across OpenTargets datasources — ChEMBL evidence scores a flat 1.0 while genetic sources score fractionally, so `ORDER BY score DESC` handed every slot to a single source. Switching the ranking key to **evidence volume per target** — which is source-agnostic — plus deduplicating inside Cypher took a lung-cancer query from 2 distinct targets to 4, with EGFR among them.
+
+Instrumenting the query path also showed the LLM is only **11-20% of wall-clock time**; the rest is retrieval and blocking outbound API calls. That is where the optimisation work actually is, and it is not the model.
+
+</details>
+
+<p>
+  <img src="https://img.shields.io/badge/Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=white" />
+  <img src="https://img.shields.io/badge/Cypher-018BFF?style=flat-square" />
+  <img src="https://img.shields.io/badge/Groq-F55036?style=flat-square" />
+  <img src="https://img.shields.io/badge/Llama%203-0866FF?style=flat-square&logo=meta&logoColor=white" />
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" />
+  <img src="https://img.shields.io/badge/asyncio-3776AB?style=flat-square&logo=python&logoColor=white" />
+</p>
+
+&rarr; [`Enterprise-Medical-GraphRAG`](https://github.com/vishnu1234555/Enterprise-Medical-GraphRAG)
 
 ---
 
 ### 🛠️ OmniOrchestrator Workspace Agent
+
 **Multi-platform tool-calling agent with a dynamic schema compiler**
 
-An agent over **Google ADK + Gemini 2.5** with a Groq fallback cascade, exposing **15 tools across 5 platforms** — Slack, Notion, Airtable, Jira and Discord — with persistent session memory.
+<p>
+  <img src="https://img.shields.io/badge/15%20tools-30363d?style=flat-square" />
+  <img src="https://img.shields.io/badge/5%20platforms-30363d?style=flat-square" />
+  <img src="https://img.shields.io/badge/Gemini%202.5-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" />
+</p>
 
-The part worth reading is the tool compiler: rather than hand-writing JSON schemas per tool, it introspects each Python function with `inspect.signature` and generates the tool schema from the signature. Adding a capability means writing a typed function; the schema follows.
+An agent over **Google ADK + Gemini 2.5** with a Groq fallback cascade, exposing **15 tools across 5 platforms** — Slack, Notion, Airtable, Jira, Discord — with persistent session memory.
+
+<details>
+<summary><b>The part worth reading</b></summary>
+
+<br>
+
+Rather than hand-writing a JSON schema per tool, the compiler introspects each Python function with `inspect.signature` and generates the tool schema from the signature itself. Adding a capability means writing one typed function; the schema follows from it. That kept 15 tools maintainable without 15 hand-maintained schema blocks drifting out of sync with the code.
+
+</details>
 
 ---
 
-### 🎙️ Shabdam.ai — Tamil / Tanglish Voice Agent *(GenLab)*
-**Speech-to-speech agent for code-mixed Tamil**
+### 🎙️ Shabdam.ai — Tamil / Tanglish Voice Agent
 
-Full-duplex voice pipeline for Tamil and Tanglish speech: **faster-whisper `large-v3`** (Tamil-forced, tuned for noisy mic input) → **Groq LLM** with a colloquial Tamil persona → **BharatGen Sooktam-2 / F5-TTS** voice-cloned synthesis. Two memory layers — Redis for in-session turns, a summarised long-term store for durable facts.
+**Speech-to-speech agent for code-mixed Tamil** · *GenLab*
 
-Runs as a **docker-compose stack** (React+Vite · FastAPI/uv · Redis 7) with a GPU reservation on the backend, both models resident on CUDA. **Measured 3–4s end-to-end** in its current serial form; the streaming rework targets the STT→LLM handoff, which is where the wall-clock time sits.
+<p>
+  <img src="https://img.shields.io/badge/End--to--end-3--4s%20measured-b08800?style=flat-square" />
+  <img src="https://img.shields.io/badge/GPU-CUDA%20resident-76B900?style=flat-square&logo=nvidia&logoColor=white" />
+</p>
+
+Full voice pipeline for Tamil and Tanglish: **faster-whisper `large-v3`** (Tamil-forced, tuned for noisy mic input) &rarr; **Groq LLM** with a colloquial Tamil persona &rarr; **BharatGen Sooktam-2 / F5-TTS** voice-cloned synthesis. Two memory layers — Redis for in-session turns, a summarised long-term store for durable facts.
+
+<details>
+<summary><b>Infrastructure and the latency story</b></summary>
+
+<br>
+
+Runs as a **docker-compose stack** (React+Vite · FastAPI/uv · Redis 7) with a GPU reservation on the backend, both models resident on CUDA.
+
+Measured at **3-4s end-to-end** in its current serial form. The streaming rework targets the STT to LLM handoff, because that is where the wall-clock time actually sits — the same lesson as GraphRAG: profile before you optimise the model.
+
+</details>
 
 ---
 
 ## Tech
 
-**Languages & Runtime** — Python · SQL · Cypher · JavaScript
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,pytorch,fastapi,react,vite,redis,docker,git,linux,vscode&theme=dark" alt="Core stack" />
+</p>
 
-**LLM & ML** — PyTorch · Hugging Face Transformers · GLiNER2 · sentence-transformers · PEFT · Groq · Gemini / Google ADK · faster-whisper · F5-TTS
+<p align="center">
+  <img src="https://img.shields.io/badge/Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=white" />
+  <img src="https://img.shields.io/badge/Qdrant-DC244C?style=flat-square&logo=qdrant&logoColor=white" />
+  <img src="https://img.shields.io/badge/Hugging%20Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black" />
+  <img src="https://img.shields.io/badge/sentence--transformers-4B8BBE?style=flat-square" />
+  <img src="https://img.shields.io/badge/GLiNER2-6A5ACD?style=flat-square" />
+  <img src="https://img.shields.io/badge/Groq-F55036?style=flat-square" />
+  <img src="https://img.shields.io/badge/Google%20ADK-4285F4?style=flat-square&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" />
+  <img src="https://img.shields.io/badge/uv-DE5FE9?style=flat-square" />
+</p>
 
-**Retrieval & Data** — Neo4j · Qdrant · vector indexes · hybrid & lexical retrieval · reciprocal rank fusion · OpenTargets
-
-**Serving & Infra** — FastAPI (async) · Streamlit · Redis · Docker & docker-compose · uv · React + Vite · Kaggle / Colab GPU workflows
-
-**Practice** — held-out evaluation · precision/recall/F1 · threshold sweeps · adversarial test design · latency profiling
+**Evaluation practice** — held-out sets · precision / recall / F1 · threshold sweeps · adversarial test design · latency profiling · reciprocal rank fusion
 
 ---
 
-## What I'm working on
+## Currently
 
-- Retrieval evaluation as a first-class artifact — context precision and grounded-answer rate on GraphRAG, not just end-to-end vibes
-- Cutting the voice pipeline from serial to streaming
+- Retrieval evaluation as a first-class artifact — context precision and grounded-answer rate on GraphRAG, not end-to-end vibes
+- Moving the voice pipeline from serial to streaming
 - A client RAG system at GenLab (ANIKA Jewellery)
 
 <p align="center">
   <sub>Open to Generative AI / LLM Engineer roles — India and remote.</sub>
 </p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:2C5364,50:203A43,100:0F2027&height=120&section=footer" width="100%" />
